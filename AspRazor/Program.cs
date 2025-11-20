@@ -5,15 +5,8 @@ using AspRazor.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("NeonCRMConnection");
-if (!string.IsNullOrEmpty(connectionString))
-{
-    builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
-}
-else
-{
-    builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("Server=localhost;Database=asprazor;"));
-}
+var connectionString = builder.Configuration.GetConnectionString("NeonConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddDefaultIdentity<Agent>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
